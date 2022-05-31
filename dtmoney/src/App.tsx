@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { Header } from "./components/Header"
 import { GlobalStyle } from "./styles/global"
 import { Dashboard } from "./components/Dashboard/intex"
+import { NewTransactionModal } from './components/NewTransactionModal'
 
 Modal.setAppElement('#root')//dentro de onde o modal vai se referenciar no caso na div root, mas o modal vai ficar no body
 
@@ -22,10 +23,10 @@ export function App() {
       <Header onOpenNewTransactionModal={handleOpenNewTransactionModal}/>
       <GlobalStyle />
       <Dashboard/>
-      <Modal isOpen={isNewTransactionModalOpen} 
-                       onRequestClose={handleCloseNewTransactionModal}>
-                    <h2>Cadastrar Transação</h2>
-      </Modal>
+      <NewTransactionModal 
+        isOpen={isNewTransactionModalOpen}
+        onRequestClose={handleCloseNewTransactionModal}
+      />
     </>
   )
 }
