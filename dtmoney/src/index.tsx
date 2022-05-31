@@ -1,6 +1,25 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { createServer } from 'miragejs'
 import {App} from './App';
+
+createServer({
+  routes(){
+    this.namespace = 'api' //rota da API em TransactionTable/index
+    this.get('/transactions', () => {
+      return [
+        {
+          id:1,
+          title: 'Transaction 1',
+          amount: 400,
+          type: 'deposit',
+          category: 'Food',
+          createdata: new Date()
+        }
+      ]
+    })
+  }
+})
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
