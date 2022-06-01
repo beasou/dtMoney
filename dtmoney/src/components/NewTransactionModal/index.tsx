@@ -21,12 +21,14 @@ export function NewTransactionModal({isOpen, onRequestClose}: NewTransactionModa
     function handleCreateNewTransaction(event: FormEvent){ //o event é do tipo FormEvent importado do react
         event.preventDefault() //previnir o funcionamento padrão, pra não ficar recarregando
         
-        const data = ({
+        const data = {
             title,
             value,
             category,
             type
-        })
+        }
+
+        api.post('/transactions', data)
     }
 
     return (
