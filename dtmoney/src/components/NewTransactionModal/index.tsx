@@ -23,16 +23,24 @@ export function NewTransactionModal({isOpen, onRequestClose}: NewTransactionModa
     const [type, setType] = useState('deposit')
     
     //cadastro nova transação
-    function handleCreateNewTransaction(event: FormEvent){  
+    async function handleCreateNewTransaction(event: FormEvent){  
         //o event é do tipo FormEvent importado do react
         event.preventDefault() //previnir o funcionamento padrão, pra não ficar recarregando
         
-        createTransaction({
+        await createTransaction({
             title,
             amount,
             category,
             type
         })
+
+        //limpar campos do modal depois de cadastrar
+        setTitle('')
+        setAmount(0)
+        setCategory('')
+        setType('deposit')
+
+        onRequestClose()//fechat modal apos cadastrar
     }
 
     return (

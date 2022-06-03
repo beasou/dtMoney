@@ -27,7 +27,7 @@ interface TransactionsProviderProps{
 
 interface TransactionsContextData {
     transactions: Transaction[] //um array de transaction
-    createTransaction: (transaction: TransactionInput) => void //uma função que vai receber uma transaction do tipo input e vai devolver um void
+    createTransaction: (transaction: TransactionInput) => Promise<void> //uma função que vai receber uma transaction do tipo input e vai devolver um void
 }
 
 export const TransactionsContext = createContext<TransactionsContextData>(
@@ -42,8 +42,17 @@ export function TransactionsProvider({children}: TransactionsProviderProps) {
         .then(response => setTransactions(response.data.transactions))
     },[])
 
-    function createTransaction(transaction: TransactionInput){
-        api.post('/transactions', transaction) //chamada da API
+    async function createTransaction(transactionInput: TransactionInput){
+       const response = await api.post('/transactions', {
+           ...transactionInput,
+           createdAt: new Date(),
+        }) //chamada da API
+        
+       const {transaction} = response.data
+       setTransactions([
+           ...transactions, //pego os transactions existentes
+           transaction, //formo um novo array
+       ])
     }
 
     return(
