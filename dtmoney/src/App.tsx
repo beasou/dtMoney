@@ -4,6 +4,7 @@ import { Header } from "./components/Header"
 import { GlobalStyle } from "./styles/global"
 import { Dashboard } from "./components/Dashboard/intex"
 import { NewTransactionModal } from './components/NewTransactionModal'
+import { TransactionsContext } from './TransactionsContext'
 
 Modal.setAppElement('#root')//dentro de onde o modal vai se referenciar no caso na div root, mas o modal vai ficar no body
 
@@ -19,7 +20,7 @@ export function App() {
   }
 
   return (
-    <>
+    <TransactionsContext.Provider value={[]}>
       <Header onOpenNewTransactionModal={handleOpenNewTransactionModal}/>
       <GlobalStyle />
       <Dashboard/>
@@ -27,7 +28,7 @@ export function App() {
         isOpen={isNewTransactionModalOpen}
         onRequestClose={handleCloseNewTransactionModal}
       />
-    </>
+    </TransactionsContext.Provider>
   )
 }
 
