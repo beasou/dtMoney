@@ -1,5 +1,5 @@
-import { createContext, useEffect, useState, ReactNode } from "react";
-import { api } from "./services/api";
+import { createContext, useEffect, useState, ReactNode, useContext } from "react";
+import { api } from "../services/api";
 
 interface Transaction{
     id: number,
@@ -30,7 +30,7 @@ interface TransactionsContextData {
     createTransaction: (transaction: TransactionInput) => Promise<void> //uma função que vai receber uma transaction do tipo input e vai devolver um void
 }
 
-export const TransactionsContext = createContext<TransactionsContextData>(
+const TransactionsContext = createContext<TransactionsContextData>(
     {} as TransactionsContextData //"engana" forçando uma tipagem no type Script 
 )
 
@@ -61,3 +61,8 @@ export function TransactionsProvider({children}: TransactionsProviderProps) {
         </TransactionsContext.Provider>
     )
 }//value={{transactions, createTransaction}} => mando um obs com transactions e a função que qro usar em
+
+export function useTransactions(){
+    const context = useContext(TransactionsContext)
+    return context
+}
